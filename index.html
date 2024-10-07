@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bearmind Dockstation Connection</title>
+	<!-- {% load static %} -->
+	<link rel="stylesheet" href="./static/css/styles.css">
+	<script>
+
+		function insertNetworksInList(networks, id){
+			const ssidSelect = document.getElementById(id);
+			ssidSelect.innerHTML = '';
+			networks.forEach(network => {
+				const option = document.createElement('option');
+				option.value = network;
+				option.textContent = network;
+				ssidSelect.appendChild(option);
+			});
+		}
+
+		function createNetworkCard(networks, id){
+			const networksList = document.getElementById(id);
+			networksList.innerHTML = '';
+			networks.forEach(network => {
+				const listItem = document.createElement('li');
+				listItem.textContent = network;
+				const deleteButton = document.createElement('button');
+				deleteButton.textContent = '×';
+				deleteButton.style.marginLeft = '10px';
+				deleteButton.style.cursor = 'pointer';
+				deleteButton.addEventListener('click', () => {
+					event.preventDefault();
+                    // TODO(AC): Call the delete function before removing the item?
+					if (confirm(`Are you sure you want delete the network ${network} ?`)) {
+						listItem.remove(network);
+						deleteKnownNetwork(network);
+					}
+				});
+				listItem.appendChild(deleteButton);
+				networksList.appendChild(listItem);
+			});
+		}
+
+		function fetchKnownNetworks() {
+			fetch('/known_wifi/')
+				.then(response => response.json())
+				.then(data => createNetworkCard(data.known_networks, 'known-network-list'));
+		}
+
+		function fetchNetworks() {
+			fetch('/scan_wifi/')
+				.then(response => response.json())
+				.then(data => insertNetworksInList(data.networks, 'new-ssid-select'));
+		}
+
+		function deleteKnownNetwork(network) {
+			fetch('/delete_wifi/', {
+				method: 'DELETE',
+				headers: {
+				'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					ssid: network,
+				})
+    		})
+		}
+
+		function refreshNetworks(){
+			let networks = [];
+			let known_networks = [];
+
+			Promise.all([
+				fetch('/scan_wifi/')
+					.then(response => response.json())
+					.then(data => {
+						networks.push(...data.networks);
+					}),
+				fetch('/known_wifi/')
+					.then(response => response.json())
+					.then(data => {
+						known_networks.push(...data.known_networks);
+					})
+			])
+			.then(() => {
+				insertNetworksInList(networks, 'new-ssid-select');
+				createNetworkCard(known_networks, 'known-network-list');
+				
+				const current_networks = networks.filter((network) =>
+					known_networks.includes(network)
+				);
+				console.log(networks)
+				console.log(known_networks)
+				insertNetworksInList(current_networks, 'current-ssid-select');
+			})
+			.catch(error => {
+				console.error("Error fetching WiFi networks", error);
+			});
+
+		}
+		
+		document.addEventListener('DOMContentLoaded', () => {
+			refreshNetworks();
+			showTab('select-network');
+		});
+
+		function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            const activeTab = document.getElementById(tabId);
+            activeTab.style.display = 'block';
+
+            const tabHeaders = document.querySelectorAll('.tab-header');
+            tabHeaders.forEach(header => {
+                header.classList.remove('active');
+            });
+            document.getElementById(`header-${tabId}`).classList.add('active');
+        }
+	</script>
+</head>
+
+<body>
+	<form method="post">
+        <!-- {% csrf_token %} -->
+
+		<img style="max-width: 100%; height: auto;" src="static/images/title.png">
+
+		<div class="tabs"></div>
+			<div class="tab-header" id="header-select-network" onclick="showTab('select-network')">Select current network</div>
+            <div class="tab-header" id="header-add-network" onclick="showTab('add-network')">&#x2795 Add a new network</div>
+            <div class="tab-header" id="header-known-networks" onclick="showTab('known-networks')">&#x2796 Delete a known network</div>
+        </div>
+
+		<!-- Known networks available -->
+        <div class="tab tab-content" id="select-network">
+            <h2>Select current network</h2>
+            <label for="current-ssid-select">Select SSID:</label>
+            <select id="current-ssid-select" name="ssid"></select>
+
+			<div class="buttons">
+				<button class="connect" type="submit" name="submit_without_password">Connect</button>
+			</div>
+        </div>
+        
+        <!-- New network -->
+        <div class="tab tab-content" id="add-network">
+            <h2>Add a new network</h2>
+            <label for="new-ssid-select">Select SSID:</label>
+            <select id="new-ssid-select" name="newssid"></select>
+
+            <label for="password">Wi-Fi Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password">
+
+            <div class="buttons">
+                <button class="save" type="submit" name="submit_with_password">Save</button>
+            </div>
+        </div>
+
+		<!-- Known networks -->
+		<div class="tab tab-content known-networks" id="known-networks">
+			<h2>Known networks</h2>
+			<ul id="known-network-list"></ul>
+		</div>
+
+		<div class="buttons">
+			<button type="button" class="refresh-btn" onclick="refreshNetworks()">&#x21BB Refresh networks</button>
+			<a href="{% url 'cancel_wifi_configuration' %}">
+				<button type="button" class="cancel-btn" id="cancel-button">Cancel</button>
+			</a>
+		</div>
+
+	</form>
+
+</body>
+
+</html>
