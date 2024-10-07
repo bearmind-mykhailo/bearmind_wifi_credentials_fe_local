@@ -1,144 +1,160 @@
 @font-face {
-    font-family: 'BearmindFont';
-    src: url('../fonts/Px-Grotesk-Regular.otf') format('opentype');
+  font-family: 'BearmindFont';
+  src: url('../fonts/Px-Grotesk-Regular.otf') format('opentype');
+}
+
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 body {
-    font-family: 'BearmindFont', sans-serif;
-    color: #051325;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-image: url('../images/wallpaper-bearmind.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  font-family: 'BearmindFont', sans-serif;
+  color: #051325;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-image: url('../images/wallpaper-bearmind.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 form {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: 20px auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
 }
 
-h1, h2 {
-    margin-bottom: 20px;
-    text-align: center;
+h1,
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.known-networks, .add-network, .select-network {
-    margin-bottom: 30px;
+.known-networks,
+.add-network,
+.select-network {
+  margin-bottom: 30px;
 }
 
 label {
-    display: block;
-    margin-bottom: 8px;
+  display: block;
+  margin-bottom: 8px;
 }
 
-select, input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+select,
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
 input::placeholder {
-    color: #888;
+  color: #888;
 }
 
-.buttons, .select-network button {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-button {
-    background-color: #FF0000;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+.buttons,
+.select-network button {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 button {
-    background-color: #e40400;
+  background-color: #ff0000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button {
+  background-color: #e40400;
 }
 
 button:hover {
-    background-color: #051325;
+  background-color: #051325;
 }
 
-.save, .connect {
-    background-color: #0a9e16;
+.save,
+.connect {
+  background-color: #0a9e16;
 }
 
-.refresh-btn, .cancel-btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    text-align: center;
+.refresh-btn,
+.cancel-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  text-align: center;
 }
 
 .refresh-btn {
-    background-color: #051325;
+  background-color: #051325;
 }
 
 .refresh-btn:hover {
-    background-color: #f03800;
+  background-color: #f03800;
 }
 
 .cancel-btn {
-    background-color: #f03800;
+  background-color: #f03800;
 }
 
 .known-networks ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .known-networks ul li {
-    padding: 10px;
-    background-color: #f9f9f9;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
 }
 
 .tab {
-    display: none;
+  display: none;
 }
 .tab-content {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 10px;
-    background-color: #fff;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #fff;
 }
 .tab-header {
-    display: flex;
-    cursor: pointer;
-    margin-right: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px 5px 0 0;
-    background-color: #f1f1f1;
-    transition: background-color 0.3s;
+  display: flex;
+  cursor: pointer;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 5px 0 0;
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
 }
 .tab-header:hover {
-    background-color: #e1e1e1;
+  background-color: #e1e1e1;
 }
 .active {
-    background-color: #fff;
-    border-bottom: none;
-    font-weight: bold;
+  background-color: #fff;
+  border-bottom: none;
+  font-weight: bold;
 }

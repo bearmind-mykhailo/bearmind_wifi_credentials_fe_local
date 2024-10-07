@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-     "start": "live-server",
-     "start-2": "live-server --port=3000 --host=localhost --open=index.html"
+    "start": "live-server --port=3000 --host=localhost --open=index.html",
+    "prettier": "prettier --write ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "prettier": "^3.3.3",
+    "prettier-config-airbnb": "^1.0.0"
   }
 }
