@@ -17,159 +17,161 @@
 
         <img src="./assets/images/title.webp" />
 
-        <div class="tab-header">
-          <div
-            class="tab-header__item"
-            id="header-connect-new-network"
-            onclick="showTab('connect-new-network')"
-          >
-            <img
-              src="./assets/icons/wifi.svg"
-              style="width: unset"
-              alt="Refresh Icon"
-              width="24"
-              height="24"
-            />
-            <span>Connect to a new Wi-Fi network</span>
-          </div>
-          <div
-            class="tab-header__item"
-            id="header-save-new-network"
-            onclick="showTab('save-new-network')"
-          >
-            <img
-              src="./assets/icons/circle-plus.svg"
-              style="width: unset"
-              alt="Refresh Icon"
-              width="24"
-              height="24"
-            />
-            <span>Save a new Wi-Fi network</span>
-          </div>
-          <div
-            class="tab-header__item"
-            id="header-known-networks"
-            onclick="showTab('known-networks')"
-          >
-            <img
-              src="./assets/icons/circle-minus.svg"
-              style="width: unset"
-              alt="Refresh Icon"
-              width="24"
-              height="24"
-            />
-            <span>Delete a known network</span>
-          </div>
-        </div>
-
-        <!-- Connect to new network -->
-        <div class="tab tab__container" id="connect-new-network">
-          <h2>Connect to a new Wi-Fi network</h2>
-          <p class="mb-1">Short explanation here which...</p>
-          <div class="input-container">
-            <label class="input-label" for="new-ssid-select">SSID:</label>
-            <div class="flex-row">
-              <select id="new-ssid-select" name="newssid"></select>
-              <button
-                class="refresh-button"
-                id="refresh-btn"
-                title="Refresh"
-                onclick="refreshNetworks()"
-              >
-                <img src="./assets/icons/refresh.svg" alt="Refresh Icon" width="24" height="24" />
-              </button>
+        <div class="container__tab-content">
+          <div class="tab-header">
+            <div
+              class="tab-header__item"
+              id="header-connect-new-network"
+              onclick="showTab('connect-new-network')"
+            >
+              <img
+                src="./assets/icons/wifi.svg"
+                style="width: unset"
+                alt="Refresh Icon"
+                width="24"
+                height="24"
+              />
+              <span>Connect to a new Wi-Fi network</span>
+            </div>
+            <div
+              class="tab-header__item"
+              id="header-save-new-network"
+              onclick="showTab('save-new-network')"
+            >
+              <img
+                src="./assets/icons/circle-plus.svg"
+                style="width: unset"
+                alt="Refresh Icon"
+                width="24"
+                height="24"
+              />
+              <span>Save a new Wi-Fi network</span>
+            </div>
+            <div
+              class="tab-header__item"
+              id="header-known-networks"
+              onclick="showTab('known-networks')"
+            >
+              <img
+                src="./assets/icons/circle-minus.svg"
+                style="width: unset"
+                alt="Refresh Icon"
+                width="24"
+                height="24"
+              />
+              <span>Delete a known network</span>
             </div>
           </div>
-          <div class="input-container">
-            <label class="input-label" for="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              required
-            />
-          </div>
-          <button
-            class="submit-btn"
-            type="submit"
-            name="submit_with_password"
-            onclick="onNewConnectSuccess()"
-          >
-            Connect now
-          </button>
-        </div>
 
-        <!-- Save a new network -->
-        <div class="tab tab__container" id="save-new-network">
-          <h2>Save a new Wi-Fi network</h2>
-          <p class="mb-1">Short explanation here which...</p>
-          <div class="input-container">
-            <label class="input-label" for="new-ssid-input">SSID:</label>
-            <input id="new-ssid-input" name="newssid" placeholder="Enter SSID" required />
+          <!-- Connect to new network -->
+          <div class="tab tab__container" id="connect-new-network">
+            <h2>Connect to a new Wi-Fi network</h2>
+            <p class="mb-1">Short explanation here which...</p>
+            <div class="input-container">
+              <label class="input-label" for="new-ssid-select">SSID:</label>
+              <div class="flex-row">
+                <select
+                  id="connect-new-network-ssid-select"
+                  name="connect new network ssid select"
+                  required
+                >
+                  <!-- FROM API -->
+                  <option value="ScannedNetwork1">ScannedNetwork1</option>
+                  <option value="ScannedNetwork2">ScannedNetwork2</option>
+                  <option value="ScannedNetwork3">ScannedNetwork3</option>
+                </select>
+                <button
+                  class="refresh-button"
+                  id="refresh-btn"
+                  title="Refresh"
+                  onclick="refreshNetworks()"
+                >
+                  <img src="./assets/icons/refresh.svg" alt="Refresh Icon" width="24" height="24" />
+                </button>
+              </div>
+            </div>
+            <div class="input-container">
+              <label class="input-label" for="password">Password:</label>
+              <input
+                type="password"
+                id="connect-new-network-password"
+                name="connect new network password"
+                placeholder="Enter password"
+              />
+            </div>
+            <button class="submit-btn" type="submit" name="submit connect new wifi network">
+              Connect now
+            </button>
           </div>
-          <div class="input-container">
-            <label class="input-label" for="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-              required
-            />
+
+          <!-- Save a new network -->
+          <div class="tab tab__container" id="save-new-network">
+            <h2>Save a new Wi-Fi network</h2>
+            <p class="mb-1">Short explanation here which...</p>
+            <div class="input-container">
+              <label class="input-label" for="new-ssid-input">SSID:</label>
+              <input id="save-new-ssid-input" name="save new ssid input" placeholder="Enter SSID" />
+            </div>
+            <div class="input-container">
+              <label class="input-label" for="password">Password:</label>
+              <input
+                type="password"
+                id="save-new-network-password"
+                name="save new network password"
+                placeholder="Enter password"
+              />
+            </div>
+            <button class="submit-btn" type="submit" name="submit save wifi network">
+              Save Wi-Fi network
+            </button>
           </div>
-          <button
-            class="submit-btn"
-            type="submit"
-            name="submit_with_password"
-            onclick="onNewConnectSuccess()"
-          >
-            Save Wi-Fi network
-          </button>
-        </div>
 
-        <!-- Known networks -->
-        <div class="tab tab__container" id="known-networks">
-          <h2>Known networks</h2>
-          <p>Short explanation here which...</p>
-          <ul class="del-known-network-list" id="known-network-list">
-            <!-- FROM API -->
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-          </ul>
-        </div>
+          <!-- Known networks -->
+          <div class="tab tab__container" id="known-networks">
+            <h2>Known networks</h2>
+            <p>Short explanation here which...</p>
+            <ul class="del-known-network-list" id="known-network-list">
+              <!-- FROM API -->
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            </ul>
+          </div>
 
-        <div class="flex-column footer">
-          <h2>Exit</h2>
-          <p class="self-start">Short explanation here which...</p>
-          <a href="{% url 'cancel_wifi_configuration' %}">
-            <button type="button" class="cancel-btn" id="cancel-button">Exit without saving</button>
-          </a>
+          <div class="flex-column footer">
+            <h2>Exit</h2>
+            <p class="self-start">Short explanation here which...</p>
+            <a href="{% url 'cancel_wifi_configuration' %}">
+              <button type="button" class="cancel-btn" id="cancel-button">
+                Exit without saving
+              </button>
+            </a>
+          </div>
         </div>
       </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
   </body>
 </html>

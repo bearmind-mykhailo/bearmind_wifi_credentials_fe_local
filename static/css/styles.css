@@ -64,13 +64,6 @@ input {
   height: 2.5rem;
 }
 
-input,
-textarea,
-button,
-select {
-  outline: none;
-}
-
 select {
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
@@ -78,6 +71,13 @@ select {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAMAAACtdX32AAAAdVBMVEUAAAD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhMdQaAAAAJ3RSTlMAAAECAwQGBwsOFBwkJTg5RUZ4eYCHkJefpaytrsXGy8zW3+Do8vNn0bsyAAAAYElEQVR42tXROwJDQAAA0Ymw1p9kiT+L5P5HVEi3qJn2lcPjtIuzUIJ/rhIGy762N3XaThqMN1ZPALsZPEzG1x8LrFL77DHBnEMxBewz0fJ6LyFHTPL7xhwzWYrJ9z22AqmQBV757MHfAAAAAElFTkSuQmCC);
   background-position: 100%;
   background-repeat: no-repeat;
+}
+
+input,
+textarea,
+button,
+select {
+  outline: none;
 }
 
 input:focus-visible,
@@ -143,6 +143,13 @@ ul {
   width: 100%;
   height: 100%;
   padding: 1.5rem;
+}
+
+.container__tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
 }
 
 .container__form-container {
@@ -252,7 +259,7 @@ ul {
   background-color: #d8d8d8;
 }
 
-.active {
+.header__item__active {
   background-color: white;
   border-width: 2px;
   border-color: black;

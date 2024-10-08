@@ -99,9 +99,30 @@ function showTab(tabId) {
 
   const tabHeaders = document.querySelectorAll('.tab-header__item');
   tabHeaders.forEach((header) => {
-    header.classList.remove('active');
+    header.classList.remove('header__item__active');
   });
-  document.getElementById(`header-${tabId}`).classList.add('active');
+  document.getElementById(`header-${tabId}`).classList.add('header__item__active');
+
+  // Connect to new network
+  const connectNewNetworkPassword = document.getElementById('connect-new-network-password');
+  const connectNewNetworkSsidSelect = document.getElementById('connect-new-network-ssid-select');
+
+  // Save new network
+  const saveNewNetworkPassword = document.getElementById('save-new-network-password');
+  const saveNewNetworkSsidInput = document.getElementById('save-new-ssid-input');
+
+  // Set required attribute for selected tab elements
+  if (tabId === 'connect-new-network') {
+    connectNewNetworkPassword.setAttribute('required', '');
+    connectNewNetworkSsidSelect.setAttribute('required', '');
+    saveNewNetworkPassword.removeAttribute('required');
+    saveNewNetworkSsidInput.removeAttribute('required');
+  } else if (tabId === 'save-new-network') {
+    saveNewNetworkPassword.setAttribute('required', '');
+    saveNewNetworkSsidInput.setAttribute('required', '');
+    connectNewNetworkPassword.removeAttribute('required');
+    connectNewNetworkSsidSelect.removeAttribute('required');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
