@@ -48,7 +48,7 @@ function fetchKnownNetworks() {
 function fetchNetworks() {
   fetch('/scan_wifi/')
     .then((response) => response.json())
-    .then((data) => insertNetworksInList(data.networks, 'new-ssid-select'));
+    .then((data) => insertNetworksInList(data.networks, 'connect-new-network-ssid-select'));
 }
 
 function deleteKnownNetwork(network) {
@@ -80,7 +80,7 @@ function refreshNetworks() {
       }),
   ])
     .then(() => {
-      insertNetworksInList(networks, 'new-ssid-select');
+      insertNetworksInList(networks, 'connect-new-network-ssid-select');
       createNetworkCard(known_networks, 'known-network-list');
 
       const current_networks = networks.filter((network) => known_networks.includes(network));
