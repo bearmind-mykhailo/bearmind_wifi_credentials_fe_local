@@ -14,13 +14,14 @@ function insertNetworksInList(networks, id) {
 function createNetworkCard(networks, id) {
   const networksList = document.getElementById(id);
   networksList.innerHTML = '';
+
   networks.forEach((network) => {
     const listItem = document.createElement('li');
     listItem.textContent = network;
+
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '×';
-    deleteButton.style.marginLeft = '10px';
-    deleteButton.style.cursor = 'pointer';
+
     deleteButton.addEventListener('click', (event) => {
       event.preventDefault();
       // TODO(AC): Call the delete function before removing the item?
@@ -29,6 +30,7 @@ function createNetworkCard(networks, id) {
         deleteKnownNetwork(network);
       }
     });
+
     listItem.appendChild(deleteButton);
     networksList.appendChild(listItem);
   });
@@ -95,7 +97,7 @@ function showTab(tabId) {
   const activeTab = document.getElementById(tabId);
   activeTab.style.display = 'flex';
 
-  const tabHeaders = document.querySelectorAll('.tab-header');
+  const tabHeaders = document.querySelectorAll('.tab-header__item');
   tabHeaders.forEach((header) => {
     header.classList.remove('active');
   });
@@ -104,11 +106,11 @@ function showTab(tabId) {
 
 document.addEventListener('DOMContentLoaded', () => {
   refreshNetworks();
-  showTab('add-network');
+  showTab('connect-new-network');
 });
 
 const form = document.getElementById('main-form');
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', function (event) {
   event.preventDefault();
   notyf.success('Your changes have been successfully saved!');
 });

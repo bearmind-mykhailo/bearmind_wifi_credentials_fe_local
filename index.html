@@ -7,7 +7,7 @@
     <!-- {% load static %} -->
     <link rel="stylesheet" href="./static/css/styles.css" />
     <script src="scripts.js" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css" />
   </head>
 
   <body>
@@ -17,21 +17,33 @@
 
         <img src="./assets/images/title.webp" />
 
-        <div class="tabs">
-          <div class="tab-header" id="header-add-network" onclick="showTab('add-network')">
+        <div class="tab-header">
+          <div
+            class="tab-header__item"
+            id="header-connect-new-network"
+            onclick="showTab('connect-new-network')"
+          >
             Connect to a new Wi-Fi network
           </div>
-          <div class="tab-header" id="header-select-network" onclick="showTab('select-network')">
-            Select current network
+          <div
+            class="tab-header__item"
+            id="header-save-new-network"
+            onclick="showTab('save-new-network')"
+          >
+            Save a new Wi-Fi network
           </div>
-          <div class="tab-header" id="header-known-networks" onclick="showTab('known-networks')">
+          <div
+            class="tab-header__item"
+            id="header-known-networks"
+            onclick="showTab('known-networks')"
+          >
             Delete a known network
           </div>
         </div>
 
-        <!-- New network -->
-        <div class="tab tab__container" id="add-network">
-          <h2 class="mb-1">Connect to a new Wi-Fi network</h2>
+        <!-- Connect to new network -->
+        <div class="tab tab__container" id="connect-new-network">
+          <h2>Connect to a new Wi-Fi network</h2>
           <p class="mb-1">Short explanation here which...</p>
           <div class="input-container">
             <label class="input-label" for="new-ssid-select">SSID:</label>
@@ -74,25 +86,74 @@
               required
             />
           </div>
-          <button class="submit-btn" type="submit" name="submit_with_password" onclick="onNewConnectSuccess()">Connect now</button>
+          <button
+            class="submit-btn"
+            type="submit"
+            name="submit_with_password"
+            onclick="onNewConnectSuccess()"
+          >
+            Connect now
+          </button>
         </div>
 
-        <!-- Known networks available -->
-        <div class="tab tab__container" id="select-network">
-          <h2 class="mb-1">Select current network</h2>
-          <label for="current-ssid-select">Select SSID:</label>
-          <select id="current-ssid-select" name="ssid"></select>
-          <button class="submit-btn" type="submit" name="submit_without_password">Connect</button>
+        <!-- Save a new network -->
+        <div class="tab tab__container" id="save-new-network">
+          <h2>Save a new Wi-Fi network</h2>
+          <p class="mb-1">Short explanation here which...</p>
+          <div class="input-container">
+            <label class="input-label" for="new-ssid-input">SSID:</label>
+            <input id="new-ssid-input" name="newssid" placeholder="Enter SSID" required />
+          </div>
+          <div class="input-container">
+            <label class="input-label" for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+          <button
+            class="submit-btn"
+            type="submit"
+            name="submit_with_password"
+            onclick="onNewConnectSuccess()"
+          >
+            Save Wi-Fi network
+          </button>
         </div>
 
         <!-- Known networks -->
         <div class="tab tab__container" id="known-networks">
-          <h2 class="mb-1">Known networks</h2>
-          <ul id="known-network-list">
+          <h2>Known networks</h2>
+          <p>Short explanation here which...</p>
+          <ul class="del-known-network-list" id="known-network-list">
             <!-- FROM API -->
-            <li>KnownNetwork1<button style="margin-left: 10px; cursor: pointer">×</button></li>
-            <li>KnownNetwork2<button style="margin-left: 10px; cursor: pointer">×</button></li>
-            <li>KnownNetwork3<button style="margin-left: 10px; cursor: pointer">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork1<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork2<button class="del-network-btn">×</button></li>
+            <li>KnownNetwork3<button class="del-network-btn">×</button></li>
           </ul>
         </div>
 
