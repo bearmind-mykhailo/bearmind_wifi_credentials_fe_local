@@ -1,67 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Bearmind Dockstation Connection</title>
-	<!-- {% load static %} -->
-	<link rel="stylesheet" href="./static/css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bearmind Dockstation Connection</title>
+    <!-- {% load static %} -->
+    <link rel="stylesheet" href="./static/css/styles.css" />
     <script src="scripts.js" defer></script>
-</head>
+  </head>
 
-<body>
-	<form method="post">
+  <body>
+    <div class="container">
+      <form class="container__form-container" method="post">
         <!-- {% csrf_token %} -->
 
-		<img style="max-width: 100%; height: auto;" src="static/images/title.png">
+        <img src="static/images/title.webp" />
 
-		<div class="tabs"></div>
-			<div class="tab-header" id="header-select-network" onclick="showTab('select-network')">Select current network</div>
-            <div class="tab-header" id="header-add-network" onclick="showTab('add-network')">&#x2795 Add a new network</div>
-            <div class="tab-header" id="header-known-networks" onclick="showTab('known-networks')">&#x2796 Delete a known network</div>
+        <div class="tabs">
+          <div class="tab-header" id="header-select-network" onclick="showTab('select-network')">
+            Select current network
+          </div>
+          <div class="tab-header" id="header-add-network" onclick="showTab('add-network')">
+            Add a new network
+          </div>
+          <div class="tab-header" id="header-known-networks" onclick="showTab('known-networks')">
+            Delete a known network
+          </div>
         </div>
 
-		<!-- Known networks available -->
+        <!-- Known networks available -->
         <div class="tab tab-content" id="select-network">
-            <h2>Select current network</h2>
-            <label for="current-ssid-select">Select SSID:</label>
-            <select id="current-ssid-select" name="ssid"></select>
-
-			<div class="buttons">
-				<button class="connect" type="submit" name="submit_without_password">Connect</button>
-			</div>
+          <h2>Select current network</h2>
+          <label for="current-ssid-select">Select SSID:</label>
+          <select id="current-ssid-select" name="ssid"></select>
+          <button class="connect" type="submit" name="submit_without_password">Connect</button>
         </div>
-        
+
         <!-- New network -->
         <div class="tab tab-content" id="add-network">
-            <h2>Add a new network</h2>
-            <label for="new-ssid-select">Select SSID:</label>
-            <select id="new-ssid-select" name="newssid"></select>
+          <h2>Add a new network</h2>
+          <label for="new-ssid-select">Select SSID:</label>
+          <select id="new-ssid-select" name="newssid"></select>
 
-            <label for="password">Wi-Fi Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter password">
+          <label for="password">Wi-Fi Password:</label>
+          <input type="password" id="password" name="password" placeholder="Enter password" />
 
-            <div class="buttons">
-                <button class="save" type="submit" name="submit_with_password">Save</button>
-            </div>
+          <button class="save" type="submit" name="submit_with_password">Save</button>
         </div>
 
-		<!-- Known networks -->
-		<div class="tab tab-content known-networks" id="known-networks">
-			<h2>Known networks</h2>
-			<ul id="known-network-list"></ul>
-		</div>
+        <!-- Known networks -->
+        <div class="tab tab-content" id="known-networks">
+          <h2>Known networks</h2>
+          <ul id="known-network-list">
+            <!-- FROM API -->
+            <li>KnownNetwork1<button style="margin-left: 10px; cursor: pointer">×</button></li>
+            <li>KnownNetwork2<button style="margin-left: 10px; cursor: pointer">×</button></li>
+            <li>KnownNetwork3<button style="margin-left: 10px; cursor: pointer">×</button></li>
+          </ul>
+        </div>
 
-		<div class="buttons">
-			<button type="button" class="refresh-btn" onclick="refreshNetworks()">&#x21BB Refresh networks</button>
-			<a href="{% url 'cancel_wifi_configuration' %}">
-				<button type="button" class="cancel-btn" id="cancel-button">Cancel</button>
-			</a>
-		</div>
-
-	</form>
-
-</body>
-
+        <div>
+          <button type="button" onclick="refreshNetworks()">Refresh networks</button>
+          <a href="{% url 'cancel_wifi_configuration' %}">
+            <button type="button" id="cancel-button">Cancel</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
