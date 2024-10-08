@@ -146,7 +146,7 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../../assets/images/wallpaper-bearmind.webp');
+  background-image: url('../../static/images/wallpaper-bearmind.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
