@@ -91,7 +91,7 @@ function showTab(tabId) {
   });
 
   const activeTab = document.getElementById(tabId);
-  activeTab.style.display = 'block';
+  activeTab.style.display = 'flex';
 
   const tabHeaders = document.querySelectorAll('.tab-header');
   tabHeaders.forEach((header) => {
@@ -102,5 +102,5 @@ function showTab(tabId) {
 
 document.addEventListener('DOMContentLoaded', () => {
   refreshNetworks();
-  showTab('select-network');
+  showTab('add-network');
 });
