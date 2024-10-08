@@ -133,18 +133,20 @@ ul {
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
-  padding: 2rem;
+  padding: 1.5rem;
 }
 
 .container__form-container {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  width: 36rem;
+  width: 34rem;
+  max-width: 90vw;
   height: 100%;
-  overflow-y: auto;
+  max-height: 52rem;
+  overflow: hidden;
   background-color: white;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: var(--BIG_BORDER_RADIUS);
 }
 
@@ -159,9 +161,20 @@ ul {
 }
 
 .submit-btn {
-  background-color: #0a9e16;
+  background-color: #40ca56;
   align-self: center;
   width: 12rem;
+}
+.submit-btn:hover {
+  background-color: #2ea843;
+}
+
+.cancel-btn {
+  background-color: #f03800;
+  width: 12rem;
+}
+.cancel-btn:hover {
+  background-color: #c22d00;
 }
 
 .known-networks ul li {
@@ -206,7 +219,12 @@ ul {
 
 .footer {
   margin-top: auto;
+  min-height: 8rem;
   align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  border-top: 1px solid #ebebeb;
+  padding-top: 0.5rem;
 }
 
 .refresh-button {

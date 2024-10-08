@@ -61,12 +61,17 @@
                   <path d="M8 16H3v5" />
                 </svg>
               </button>
-              <!-- <button type="button" onclick="refreshNetworks()">R</button> -->
             </div>
           </div>
           <div class="input-container">
             <label class="input-label" for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter password" />
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              required
+            />
           </div>
           <button class="submit-btn" type="submit" name="submit_with_password">Connect now</button>
         </div>
@@ -94,7 +99,7 @@
           <h2>Exit</h2>
           <p class="self-start">Short explanation here which...</p>
           <a href="{% url 'cancel_wifi_configuration' %}">
-            <button type="button" id="cancel-button">Exit without saving</button>
+            <button type="button" class="cancel-btn" id="cancel-button">Exit without saving</button>
           </a>
         </div>
       </form>
