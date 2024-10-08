@@ -217,7 +217,7 @@ ul {
   flex-direction: column;
   gap: 0.75rem;
   overflow-y: auto;
-  max-height: 16rem;
+  max-height: 32vh;
   padding-right: 0.75rem;
 
   li {
