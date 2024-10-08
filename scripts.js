@@ -1,4 +1,7 @@
-var notyf = new Notyf();
+var notyf = new Notyf({
+  position: { x: 'right', y: 'top' },
+  ripple: false,
+});
 
 function insertNetworksInList(networks, id) {
   const ssidSelect = document.getElementById(id);
@@ -132,6 +135,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const form = document.getElementById('main-form');
 form.addEventListener('submit', function (event) {
+  // TODO - api call
   event.preventDefault();
+
+  const tabsContent = document.getElementById('tabs-content');
+  tabsContent.style.display = 'none';
+
+  const mainForm = document.getElementById('main-form');
+  mainForm.style.maxHeight = '34rem';
+
+  const confirmationContent = document.getElementById('confirmation-content');
+  confirmationContent.style.display = 'flex';
+
   notyf.success('Your changes have been successfully saved!');
 });

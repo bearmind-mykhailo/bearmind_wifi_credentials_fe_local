@@ -17,7 +17,8 @@
 
         <img src="./assets/images/title.webp" />
 
-        <div class="container__tab-content">
+        <!-- TABS CONTENT VIEW -->
+        <div class="container__tabs-content" id="tabs-content">
           <div class="tab-header">
             <div
               class="tab-header__item"
@@ -168,6 +169,28 @@
               </button>
             </a>
           </div>
+        </div>
+
+        <!-- CONFIRMATION VIEW -->
+        <div class="container__confirmation-content" id="confirmation-content">
+          <div>
+            <h1 class="mb-1">Connecting to a new Wi-Fi network...</h1>
+            <p>
+              The Dockstation will connect to ExampleNetwork1 in 10 seconds. You will be
+              disconnected from this page.
+            </p>
+          </div>
+          <img
+            src="./assets/icons/circle-check.svg"
+            style="width: unset"
+            alt="Refresh Icon"
+            width="160"
+            height="160"
+          />
+          <span>
+            <p>Monitor the Dockstation's Wi-Fi LED for connectivity.</p>
+            <p>[Plus any other info]</p>
+          </span>
         </div>
       </form>
     </div>
