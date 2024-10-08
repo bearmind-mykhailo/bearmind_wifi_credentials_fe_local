@@ -1,3 +1,5 @@
+var notyf = new Notyf();
+
 function insertNetworksInList(networks, id) {
   const ssidSelect = document.getElementById(id);
   ssidSelect.innerHTML = '';
@@ -103,4 +105,10 @@ function showTab(tabId) {
 document.addEventListener('DOMContentLoaded', () => {
   refreshNetworks();
   showTab('add-network');
+});
+
+const form = document.getElementById('main-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  notyf.success('Your changes have been successfully saved!');
 });
