@@ -104,7 +104,6 @@ input::placeholder {
 
 button {
   color: white;
-  /* background-color: #051325; */
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 4px;
@@ -118,6 +117,17 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+dialog {
+  padding: 1.5rem;
+  max-width: 28rem;
+  border: var(--BORDER);
+  border-radius: var(--BORDER_RADIUS);
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* COMMON */
@@ -144,12 +154,20 @@ ul {
   align-self: flex-start;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
 .gap-05 {
   gap: 0.5rem;
 }
 
 .gap-1 {
   gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
 }
 
 /* CUSTOM */
@@ -206,10 +224,13 @@ ul {
   font-weight: 700;
 }
 
+.action-btn {
+  width: 12rem;
+}
+
 .submit-btn {
   background-color: #40ca56;
   align-self: center;
-  width: 12rem;
 }
 .submit-btn:hover {
   background-color: #2ea843;
@@ -217,7 +238,6 @@ ul {
 
 .cancel-btn {
   background-color: #f03800;
-  width: 12rem;
 }
 .cancel-btn:hover {
   background-color: #c22d00;
@@ -320,4 +340,8 @@ ul {
 }
 .refresh-button:hover {
   background-color: #0558bd;
+}
+
+.dialog-action-btn {
+  width: 8rem;
 }

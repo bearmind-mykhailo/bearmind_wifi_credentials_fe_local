@@ -3,40 +3,76 @@ var notyf = new Notyf({
   ripple: false,
 });
 
+const confirmDeleteDialogEl = document.getElementById('confirm-delete-dialog');
+confirmDeleteDialogEl.addEventListener('close', () => {
+  const selectedNetwork = confirmDeleteDialogEl.dataset.selectedNetwork;
+  const selectedNetworkIndex = confirmDeleteDialogEl.dataset.selectedNetworkIndex;
+
+  if (confirmDeleteDialogEl.returnValue === 'confirm' && selectedNetwork) {
+    // TODO(AC): Call the delete function before removing the item?
+    const listItem = document.getElementById(`${selectedNetwork}-${selectedNetworkIndex}`);
+
+    listItem.remove();
+    deleteKnownNetwork(selectedNetwork);
+
+    delete promptDialog.dataset.selectedNetwork;
+    delete promptDialog.dataset.selectedNetworkIndex;
+  }
+});
+
 function insertNetworksInList(networks, id) {
-  const ssidSelect = document.getElementById(id);
-  ssidSelect.innerHTML = '';
+  const ssidSelectEl = document.getElementById(id);
+  ssidSelectEl.innerHTML = '';
   networks.forEach((network) => {
     const option = document.createElement('option');
     option.value = network;
     option.textContent = network;
-    ssidSelect.appendChild(option);
+    ssidSelectEl.appendChild(option);
   });
 }
 
+const confirmDeleteDialogTextEl = document.getElementById('confirm-delete-dialog-text');
 function createNetworkCard(networks, id) {
-  const networksList = document.getElementById(id);
-  networksList.innerHTML = '';
+  const networksListEl = document.getElementById(id);
+  networksListEl.innerHTML = '';
 
-  networks.forEach((network) => {
+  networks.forEach((network, index) => {
     const listItem = document.createElement('li');
+    listItem.id = `${network}-${index}`;
     listItem.textContent = network;
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '×';
 
+    // show modal & modify text
     deleteButton.addEventListener('click', (event) => {
       event.preventDefault();
-      // TODO(AC): Call the delete function before removing the item?
-      if (confirm(`Are you sure you want delete the network ${network} ?`)) {
-        listItem.remove(network);
-        deleteKnownNetwork(network);
-      }
+
+      confirmDeleteDialogTextEl.textContent = 'Do you really want to remove ';
+      const strongEl = document.createElement('strong');
+      strongEl.textContent = network;
+      confirmDeleteDialogTextEl.appendChild(strongEl);
+      confirmDeleteDialogTextEl.appendChild(document.createTextNode('?'));
+
+      confirmDeleteDialogEl.dataset.selectedNetwork = network;
+      confirmDeleteDialogEl.dataset.selectedNetworkIndex = index;
+      confirmDeleteDialogEl.showModal();
     });
 
     listItem.appendChild(deleteButton);
-    networksList.appendChild(listItem);
+    networksListEl.appendChild(listItem);
   });
+}
+
+function testOnDelete() {
+  confirmDeleteDialogTextEl.textContent = 'Do you really want to remove ';
+  const strongEl = document.createElement('strong');
+  strongEl.textContent = 'KnownNetwork2';
+  confirmDeleteDialogTextEl.appendChild(strongEl);
+  confirmDeleteDialogTextEl.appendChild(document.createTextNode('?'));
+
+  confirmDeleteDialogEl.dataset.network = 'KnownNetwork2';
+  confirmDeleteDialogEl.showModal();
 }
 
 function fetchKnownNetworks() {
@@ -97,35 +133,14 @@ function showTab(tabId) {
     tab.style.display = 'none';
   });
 
-  const activeTab = document.getElementById(tabId);
-  activeTab.style.display = 'flex';
+  const activeTabEl = document.getElementById(tabId);
+  activeTabEl.style.display = 'flex';
 
   const tabHeaders = document.querySelectorAll('.tab-header__item');
   tabHeaders.forEach((header) => {
     header.classList.remove('header__item__active');
   });
   document.getElementById(`header-${tabId}`).classList.add('header__item__active');
-
-  // // Connect to new network
-  // const connectNewNetworkPassword = document.getElementById('connect-new-network-password');
-  // const connectNewNetworkSsidSelect = document.getElementById('connect-new-network-ssid-select');
-
-  // // Save new network
-  // const saveNewNetworkPassword = document.getElementById('save-new-network-password');
-  // const saveNewNetworkSsidInput = document.getElementById('save-new-ssid-input');
-
-  // // Set required attribute for selected tab elements
-  // if (tabId === 'connect-new-network-form') {
-  //   connectNewNetworkPassword.setAttribute('required', '');
-  //   connectNewNetworkSsidSelect.setAttribute('required', '');
-  //   saveNewNetworkPassword.removeAttribute('required');
-  //   saveNewNetworkSsidInput.removeAttribute('required');
-  // } else if (tabId === 'save-new-network-form') {
-  //   saveNewNetworkPassword.setAttribute('required', '');
-  //   saveNewNetworkSsidInput.setAttribute('required', '');
-  //   connectNewNetworkPassword.removeAttribute('required');
-  //   connectNewNetworkSsidSelect.removeAttribute('required');
-  // }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -133,22 +148,25 @@ document.addEventListener('DOMContentLoaded', () => {
   showTab('connect-new-network-form');
 });
 
+const tabsContentEl = document.getElementById('tabs-content');
+const containerContentEl = document.getElementById('container-content');
+const confirmationContentEl = document.getElementById('confirmation-content');
+const confirmationHeaderEl = document.getElementById('confirmation-header');
+const confirmationInfo1El = document.getElementById('confirmation-info-1');
+
 const connectNewNetworkForm = document.getElementById('connect-new-network-form');
 connectNewNetworkForm.addEventListener('submit', function (event) {
   // TODO - api call
   event.preventDefault();
 
   // hide tabs content
-  const tabsContent = document.getElementById('tabs-content');
-  tabsContent.style.display = 'none';
+  tabsContentEl.style.display = 'none';
 
   // shrink whole popup
-  const containerContentEl = document.getElementById('container-content');
   containerContentEl.style.maxHeight = '34rem';
 
   // show confirmation content
-  const confirmationContent = document.getElementById('confirmation-content');
-  confirmationContent.style.display = 'flex';
+  confirmationContentEl.style.display = 'flex';
 
   notyf.success('Successfully connected to the new Wi-Fi network!');
 });
@@ -159,22 +177,18 @@ saveNewNetworkForm.addEventListener('submit', function (event) {
   event.preventDefault();
 
   // hide tabs content
-  const tabsContent = document.getElementById('tabs-content');
-  tabsContent.style.display = 'none';
+  tabsContentEl.style.display = 'none';
 
   // shrink whole popup
-  const containerContentEl = document.getElementById('container-content');
   containerContentEl.style.maxHeight = '34rem';
 
   // set custom texts
-  document.getElementById('confirmation-header').textContent =
-    'A new Wi-Fi network has been added!';
-  document.getElementById('confirmation-info-1').textContent =
+  confirmationHeaderEl.textContent = 'A new Wi-Fi network has been added!';
+  confirmationInfo1El.textContent =
     'The network has been successfully saved. It will automatically connect whenever you are within range, ensuring a seamless connection.';
 
   // show confirmation content
-  const confirmationContent = document.getElementById('confirmation-content');
-  confirmationContent.style.display = 'flex';
+  confirmationContentEl.style.display = 'flex';
 
   notyf.success('Successfully saved a new Wi-Fi network!');
 });

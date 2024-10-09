@@ -115,7 +115,11 @@
                 required
               />
             </div>
-            <button class="submit-btn" type="submit" name="submit connect new wifi network">
+            <button
+              class="action-btn submit-btn"
+              type="submit"
+              name="submit connect new wifi network"
+            >
               Connect now
             </button>
           </form>
@@ -158,7 +162,7 @@
                 required
               />
             </div>
-            <button class="submit-btn" type="submit" name="submit save wifi network">
+            <button class="action-btn submit-btn" type="submit" name="submit save wifi network">
               Save Wi-Fi network
             </button>
           </form>
@@ -172,30 +176,78 @@
             </p>
             <ul class="del-known-network-list" id="known-network-list">
               <!-- FROM API -->
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork1<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork2<button class="del-network-btn">×</button></li>
-              <li>KnownNetwork3<button class="del-network-btn">×</button></li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork1<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork2<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
+              <li>
+                KnownNetwork3<button class="del-network-btn" onclick="testOnDelete()">×</button>
+              </li>
             </ul>
           </div>
 
@@ -203,7 +255,12 @@
             <h2>Exit</h2>
             <p class="self-start">Short explanation here which...</p>
             <a href="{% url 'cancel_wifi_configuration' %}">
-              <button type="button" class="cancel-btn" id="cancel-button">
+              <button
+                type="button"
+                class="action-btn cancel-btn"
+                onclick="testOnDelete()"
+                id="cancel-button"
+              >
                 Exit without saving
               </button>
             </a>
@@ -233,6 +290,20 @@
         </div>
       </div>
     </div>
+
+    <!-- DIALOG POPUP -->
+    <dialog id="confirm-delete-dialog">
+      <form method="dialog">
+        <div class="flex-column gap-2">
+          <h2>Confirm action</h2>
+          <p id="confirm-delete-dialog-text"></p>
+          <div class="flex-row justify-between">
+            <button class="dialog-action-btn cancel-btn" value="cancel">Cancel</button>
+            <button class="dialog-action-btn submit-btn" value="confirm">OK</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
 
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
   </body>
