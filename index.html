@@ -90,6 +90,7 @@
                   name="connect new network ssid select"
                   required
                 >
+                  <option value="" disabled selected hidden>Select SSID</option>
                   <!-- FROM API -->
                   <option value="ScannedNetwork1">ScannedNetwork1</option>
                   <option value="ScannedNetwork2">ScannedNetwork2</option>
@@ -284,6 +285,13 @@
             Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully
             connected to the Wi-Fi network.
           </p>
+          <button
+            id="confirmation-return-btn"
+            class="action-btn cancel-btn container__confirmation-content__return-btn"
+            onclick="goBack()"
+          >
+            Return
+          </button>
         </div>
       </div>
     </div>

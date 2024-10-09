@@ -83,6 +83,18 @@ select {
   background-repeat: no-repeat;
 }
 
+select option {
+  color: black;
+}
+
+select:invalid {
+  color: #898989;
+}
+
+select:focus:invalid {
+  color: #898989;
+}
+
 input,
 textarea,
 button,
@@ -152,6 +164,10 @@ dialog::backdrop {
 
 .self-start {
   align-self: flex-start;
+}
+
+.self-center {
+  align-self: center;
 }
 
 .justify-between {
@@ -344,4 +360,9 @@ dialog::backdrop {
 
 .dialog-action-btn {
   width: 8rem;
+}
+
+.container__confirmation-content__return-btn {
+  display: none;
+  align-self: center;
 }

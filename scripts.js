@@ -154,6 +154,23 @@ const confirmationContentEl = document.getElementById('confirmation-content');
 const confirmationHeaderEl = document.getElementById('confirmation-header');
 const confirmationInfo1El = document.getElementById('confirmation-info-1');
 const connectNewNetworkSSIDSelect = document.getElementById('connect-new-network-ssid-select');
+const confirmationReturnBtnEl = document.getElementById('confirmation-return-btn');
+const saveNewSSIDInput = document.getElementById('save-new-ssid-input');
+const saveNewNetworkPassword = document.getElementById('save-new-network-password');
+
+function goBack() {
+  confirmationContentEl.style.display = 'none';
+  confirmationReturnBtnEl.style.display = 'none';
+
+  tabsContentEl.style.display = 'flex';
+  containerContentEl.style.maxHeight = '52rem';
+
+  saveNewSSIDInput.value = '';
+  saveNewNetworkPassword.value = '';
+
+  refreshNetworks();
+  showTab('connect-new-network-form');
+}
 
 const connectNewNetworkForm = document.getElementById('connect-new-network-form');
 connectNewNetworkForm.addEventListener('submit', function (event) {
@@ -177,6 +194,7 @@ connectNewNetworkForm.addEventListener('submit', function (event) {
 
   // show confirmation content
   confirmationContentEl.style.display = 'flex';
+  confirmationReturnBtnEl.style.display = 'none';
 
   notyf.success('Successfully connected to the new Wi-Fi network!');
 });
@@ -199,6 +217,7 @@ saveNewNetworkForm.addEventListener('submit', function (event) {
 
   // show confirmation content
   confirmationContentEl.style.display = 'flex';
+  confirmationReturnBtnEl.style.display = 'block';
 
   notyf.success('Successfully saved a new Wi-Fi network!');
 });
