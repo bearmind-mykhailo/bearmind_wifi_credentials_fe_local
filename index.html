@@ -12,7 +12,7 @@
 
   <body>
     <div class="container">
-      <form class="container__form-container" method="post" id="main-form">
+      <div class="container__content" id="container-content">
         <!-- {% csrf_token %} -->
 
         <img src="./static/images/title.webp" />
@@ -22,8 +22,8 @@
           <div class="tab-header">
             <div
               class="tab-header__item"
-              id="header-connect-new-network"
-              onclick="showTab('connect-new-network')"
+              id="header-connect-new-network-form"
+              onclick="showTab('connect-new-network-form')"
             >
               <img
                 src="./static/icons/wifi.svg"
@@ -65,9 +65,23 @@
           </div>
 
           <!-- Connect to new network -->
-          <div class="tab tab__container" id="connect-new-network">
+          <form class="tab tab__container" id="connect-new-network-form" method="post">
             <h2>Connect to a new Wi-Fi network</h2>
-            <p class="mb-1">Short explanation here which...</p>
+            <span class="flex-column gap-05">
+              <p>
+                Choose the Wi-Fi network you would like to use with your Bearmind Dockstation. Make
+                sure you are within range of the desired network.
+              </p>
+              <p>
+                <strong>NOTE:</strong> Press the refresh arrow to re-scan for Wi-Fi networks if
+                yours does not immediately appear in the dropdown list.
+              </p>
+              <p>
+                <strong>NOTE:</strong> At this time, Bearmind does not allow connecting to unsecured
+                Wi-Fi networks (i.e. no password). If this is the case, please choose an alternative
+                network.
+              </p>
+            </span>
             <div class="input-container">
               <label class="input-label" for="connect-new-network-ssid-select">SSID:</label>
               <div class="flex-row">
@@ -103,12 +117,27 @@
             <button class="submit-btn" type="submit" name="submit connect new wifi network">
               Connect now
             </button>
-          </div>
+          </form>
 
           <!-- Save a new network -->
           <div class="tab tab__container" id="save-new-network">
             <h2>Save a new Wi-Fi network</h2>
-            <p class="mb-1">Short explanation here which...</p>
+            <span class="flex-column gap-05">
+              <p>
+                Add a new Wi-Fi network that you would like to use with your Bearmind Dockstation.
+                The Bearmind Dockstation will connect to this Wi-Fi network next time it is within
+                range.
+              </p>
+              <p>
+                <strong>NOTE:</strong> To connect to a Wi-Fi network that is currently within range,
+                use the section <strong>“Connect to a new Wi-Fi network”</strong>.
+              </p>
+              <p>
+                <strong>NOTE:</strong> At this time, Bearmind does not allow connecting to unsecured
+                Wi-Fi networks (i.e. no password). If this is the case, please choose an alternative
+                network.
+              </p>
+            </span>
             <div class="input-container">
               <label class="input-label" for="new-ssid-input">SSID:</label>
               <input id="save-new-ssid-input" name="save new ssid input" placeholder="Enter SSID" />
@@ -130,7 +159,10 @@
           <!-- Known networks -->
           <div class="tab tab__container" id="known-networks">
             <h2>Known networks</h2>
-            <p>Short explanation here which...</p>
+            <p>
+              Remove a saved Wi-Fi network from your Bearmind Dockstation. The Bearmind Dockstation
+              will no longer connect to this Wi-Fi network when it is within range.
+            </p>
             <ul class="del-known-network-list" id="known-network-list">
               <!-- FROM API -->
               <li>KnownNetwork1<button class="del-network-btn">×</button></li>
@@ -160,7 +192,7 @@
             </ul>
           </div>
 
-          <div class="flex-column footer">
+          <div class="flex-column gap-1 footer">
             <h2>Exit</h2>
             <p class="self-start">Short explanation here which...</p>
             <a href="{% url 'cancel_wifi_configuration' %}">
@@ -176,8 +208,8 @@
           <div>
             <h1 class="mb-1">Connecting to a new Wi-Fi network...</h1>
             <p>
-              The Dockstation will connect to ExampleNetwork1 in 10 seconds. You will be
-              disconnected from this page.
+              The Bearmind Dockstation is now connecting to [ExampleNetwork1]. Your computer will be
+              disconnected from the local network.
             </p>
           </div>
           <img
@@ -188,11 +220,13 @@
             height="160"
           />
           <span>
-            <p>Monitor the Dockstation's Wi-Fi LED for connectivity.</p>
-            <p>[Plus any other info]</p>
+            <p>
+              Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully
+              connected to the Wi-Fi network.
+            </p>
           </span>
         </div>
-      </form>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

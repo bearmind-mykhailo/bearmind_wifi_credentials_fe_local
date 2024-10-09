@@ -115,7 +115,7 @@ function showTab(tabId) {
   const saveNewNetworkSsidInput = document.getElementById('save-new-ssid-input');
 
   // Set required attribute for selected tab elements
-  if (tabId === 'connect-new-network') {
+  if (tabId === 'connect-new-network-form') {
     connectNewNetworkPassword.setAttribute('required', '');
     connectNewNetworkSsidSelect.setAttribute('required', '');
     saveNewNetworkPassword.removeAttribute('required');
@@ -130,19 +130,19 @@ function showTab(tabId) {
 
 document.addEventListener('DOMContentLoaded', () => {
   refreshNetworks();
-  showTab('connect-new-network');
+  showTab('connect-new-network-form');
 });
 
-const form = document.getElementById('main-form');
-form.addEventListener('submit', function (event) {
+const connectNewNetworkForm = document.getElementById('connect-new-network-form');
+connectNewNetworkForm.addEventListener('submit', function (event) {
   // TODO - api call
   event.preventDefault();
 
   const tabsContent = document.getElementById('tabs-content');
   tabsContent.style.display = 'none';
 
-  const mainForm = document.getElementById('main-form');
-  mainForm.style.maxHeight = '34rem';
+  const containerContentEl = document.getElementById('container-content');
+  containerContentEl.style.maxHeight = '34rem';
 
   const confirmationContent = document.getElementById('confirmation-content');
   confirmationContent.style.display = 'flex';
