@@ -153,6 +153,7 @@ const containerContentEl = document.getElementById('container-content');
 const confirmationContentEl = document.getElementById('confirmation-content');
 const confirmationHeaderEl = document.getElementById('confirmation-header');
 const confirmationInfo1El = document.getElementById('confirmation-info-1');
+const connectNewNetworkSSIDSelect = document.getElementById('connect-new-network-ssid-select');
 
 const connectNewNetworkForm = document.getElementById('connect-new-network-form');
 connectNewNetworkForm.addEventListener('submit', function (event) {
@@ -164,6 +165,15 @@ connectNewNetworkForm.addEventListener('submit', function (event) {
 
   // shrink whole popup
   containerContentEl.style.maxHeight = '34rem';
+
+  // set custom texts
+  confirmationInfo1El.textContent = 'The Bearmind Dockstation is now connecting to ';
+  const strongEl = document.createElement('strong');
+  strongEl.textContent = connectNewNetworkSSIDSelect.value;
+  confirmationInfo1El.appendChild(strongEl);
+  confirmationInfo1El.appendChild(
+    document.createTextNode('. Your computer will be disconnected from the local network.'),
+  );
 
   // show confirmation content
   confirmationContentEl.style.display = 'flex';
