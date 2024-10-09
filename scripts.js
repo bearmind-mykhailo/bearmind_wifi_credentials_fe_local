@@ -23,12 +23,22 @@ confirmDeleteDialogEl.addEventListener('close', () => {
 function insertNetworksInList(networks, id) {
   const ssidSelectEl = document.getElementById(id);
   ssidSelectEl.innerHTML = '';
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.disabled = true;
+  defaultOption.hidden = true;
+  defaultOption.textContent = 'Select SSID';
+  ssidSelectEl.appendChild(defaultOption);
+
   networks.forEach((network) => {
     const option = document.createElement('option');
     option.value = network;
     option.textContent = network;
     ssidSelectEl.appendChild(option);
   });
+
+  ssidSelectEl.value = '';
 }
 
 const confirmDeleteDialogTextEl = document.getElementById('confirm-delete-dialog-text');
@@ -43,6 +53,7 @@ function createNetworkCard(networks, id) {
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = '×';
+    deleteButton.classList.add('del-network-btn');
 
     // show modal & modify text
     deleteButton.addEventListener('click', (event) => {
@@ -118,9 +129,6 @@ function refreshNetworks() {
     .then(() => {
       insertNetworksInList(networks, 'connect-new-network-ssid-select');
       createNetworkCard(known_networks, 'known-network-list');
-
-      const current_networks = networks.filter((network) => known_networks.includes(network));
-      insertNetworksInList(current_networks, 'current-ssid-select');
     })
     .catch((error) => {
       console.error('Error fetching WiFi networks', error);
