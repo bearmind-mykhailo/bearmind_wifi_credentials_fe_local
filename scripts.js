@@ -106,26 +106,26 @@ function showTab(tabId) {
   });
   document.getElementById(`header-${tabId}`).classList.add('header__item__active');
 
-  // Connect to new network
-  const connectNewNetworkPassword = document.getElementById('connect-new-network-password');
-  const connectNewNetworkSsidSelect = document.getElementById('connect-new-network-ssid-select');
+  // // Connect to new network
+  // const connectNewNetworkPassword = document.getElementById('connect-new-network-password');
+  // const connectNewNetworkSsidSelect = document.getElementById('connect-new-network-ssid-select');
 
-  // Save new network
-  const saveNewNetworkPassword = document.getElementById('save-new-network-password');
-  const saveNewNetworkSsidInput = document.getElementById('save-new-ssid-input');
+  // // Save new network
+  // const saveNewNetworkPassword = document.getElementById('save-new-network-password');
+  // const saveNewNetworkSsidInput = document.getElementById('save-new-ssid-input');
 
-  // Set required attribute for selected tab elements
-  if (tabId === 'connect-new-network-form') {
-    connectNewNetworkPassword.setAttribute('required', '');
-    connectNewNetworkSsidSelect.setAttribute('required', '');
-    saveNewNetworkPassword.removeAttribute('required');
-    saveNewNetworkSsidInput.removeAttribute('required');
-  } else if (tabId === 'save-new-network') {
-    saveNewNetworkPassword.setAttribute('required', '');
-    saveNewNetworkSsidInput.setAttribute('required', '');
-    connectNewNetworkPassword.removeAttribute('required');
-    connectNewNetworkSsidSelect.removeAttribute('required');
-  }
+  // // Set required attribute for selected tab elements
+  // if (tabId === 'connect-new-network-form') {
+  //   connectNewNetworkPassword.setAttribute('required', '');
+  //   connectNewNetworkSsidSelect.setAttribute('required', '');
+  //   saveNewNetworkPassword.removeAttribute('required');
+  //   saveNewNetworkSsidInput.removeAttribute('required');
+  // } else if (tabId === 'save-new-network-form') {
+  //   saveNewNetworkPassword.setAttribute('required', '');
+  //   saveNewNetworkSsidInput.setAttribute('required', '');
+  //   connectNewNetworkPassword.removeAttribute('required');
+  //   connectNewNetworkSsidSelect.removeAttribute('required');
+  // }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -138,14 +138,43 @@ connectNewNetworkForm.addEventListener('submit', function (event) {
   // TODO - api call
   event.preventDefault();
 
+  // hide tabs content
   const tabsContent = document.getElementById('tabs-content');
   tabsContent.style.display = 'none';
 
+  // shrink whole popup
   const containerContentEl = document.getElementById('container-content');
   containerContentEl.style.maxHeight = '34rem';
 
+  // show confirmation content
   const confirmationContent = document.getElementById('confirmation-content');
   confirmationContent.style.display = 'flex';
 
-  notyf.success('Your changes have been successfully saved!');
+  notyf.success('Successfully connected to the new Wi-Fi network!');
+});
+
+const saveNewNetworkForm = document.getElementById('save-new-network-form');
+saveNewNetworkForm.addEventListener('submit', function (event) {
+  // TODO - api call
+  event.preventDefault();
+
+  // hide tabs content
+  const tabsContent = document.getElementById('tabs-content');
+  tabsContent.style.display = 'none';
+
+  // shrink whole popup
+  const containerContentEl = document.getElementById('container-content');
+  containerContentEl.style.maxHeight = '34rem';
+
+  // set custom texts
+  document.getElementById('confirmation-header').textContent =
+    'A new Wi-Fi network has been added!';
+  document.getElementById('confirmation-info-1').textContent =
+    'The network has been successfully saved. It will automatically connect whenever you are within range, ensuring a seamless connection.';
+
+  // show confirmation content
+  const confirmationContent = document.getElementById('confirmation-content');
+  confirmationContent.style.display = 'flex';
+
+  notyf.success('Successfully saved a new Wi-Fi network!');
 });

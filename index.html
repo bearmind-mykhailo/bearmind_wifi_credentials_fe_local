@@ -36,8 +36,8 @@
             </div>
             <div
               class="tab-header__item"
-              id="header-save-new-network"
-              onclick="showTab('save-new-network')"
+              id="header-save-new-network-form"
+              onclick="showTab('save-new-network-form')"
             >
               <img
                 src="./static/icons/circle-plus.svg"
@@ -112,6 +112,7 @@
                 id="connect-new-network-password"
                 name="connect new network password"
                 placeholder="Enter password"
+                required
               />
             </div>
             <button class="submit-btn" type="submit" name="submit connect new wifi network">
@@ -120,7 +121,7 @@
           </form>
 
           <!-- Save a new network -->
-          <div class="tab tab__container" id="save-new-network">
+          <form class="tab tab__container" id="save-new-network-form" method="post">
             <h2>Save a new Wi-Fi network</h2>
             <span class="flex-column gap-05">
               <p>
@@ -140,7 +141,12 @@
             </span>
             <div class="input-container">
               <label class="input-label" for="new-ssid-input">SSID:</label>
-              <input id="save-new-ssid-input" name="save new ssid input" placeholder="Enter SSID" />
+              <input
+                id="save-new-ssid-input"
+                name="save new ssid input"
+                placeholder="Enter SSID"
+                required
+              />
             </div>
             <div class="input-container">
               <label class="input-label" for="password">Password:</label>
@@ -149,12 +155,13 @@
                 id="save-new-network-password"
                 name="save new network password"
                 placeholder="Enter password"
+                required
               />
             </div>
             <button class="submit-btn" type="submit" name="submit save wifi network">
               Save Wi-Fi network
             </button>
-          </div>
+          </form>
 
           <!-- Known networks -->
           <div class="tab tab__container" id="known-networks">
@@ -206,8 +213,8 @@
         <!-- CONFIRMATION VIEW -->
         <div class="container__confirmation-content" id="confirmation-content">
           <div>
-            <h1 class="mb-1">Connecting to a new Wi-Fi network...</h1>
-            <p>
+            <h1 id="confirmation-header" class="mb-1">Connecting to a new Wi-Fi network...</h1>
+            <p id="confirmation-info-1">
               The Bearmind Dockstation is now connecting to [ExampleNetwork1]. Your computer will be
               disconnected from the local network.
             </p>
@@ -219,12 +226,10 @@
             width="160"
             height="160"
           />
-          <span>
-            <p>
-              Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully
-              connected to the Wi-Fi network.
-            </p>
-          </span>
+          <p id="confirmation-info-2">
+            Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully
+            connected to the Wi-Fi network.
+          </p>
         </div>
       </div>
     </div>
