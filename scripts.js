@@ -78,6 +78,12 @@ async function deleteKnownNetwork(network) {
   });
 }
 
+async function disconnectDockstation() {
+  await fetchWithErrorHandling('/cancel/', {
+    method: 'POST',
+  });
+}
+
 async function refreshNetworks() {
   let networks = [];
   let known_networks = [];
@@ -204,12 +210,19 @@ function testOnDelete() {
   confirmDialogEl.showModal();
 }
 
-function onDisconnect() {
-  confirmDeleteDialogHeaderEl.textContent = 'Disconnect now?';
-  confirmDialogTextEl.style.display = 'none';
-  confirmDialogTextEl.textContent = '';
-  confirmDialogEl.dataset.disconnect = true;
-  confirmDialogEl.showModal();
+async function onDisconnect() {
+  try {
+    await disconnectDockstation();
+
+    confirmDeleteDialogHeaderEl.textContent = 'Disconnect now?';
+    confirmDialogTextEl.style.display = 'none';
+    confirmDialogTextEl.textContent = '';
+    confirmDialogEl.dataset.disconnect = true;
+    confirmDialogEl.showModal();
+  } catch (error) {
+    console.error('onDisconnect - error: ', error);
+    notyf.error('Failed to disconnect dockstation!');
+  } 
 }
 
 function showTab(tabId) {
