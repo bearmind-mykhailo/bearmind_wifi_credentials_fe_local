@@ -29,20 +29,19 @@ const connectNewNetworkFormEl = document.getElementById('connect-new-network-for
 const connectNewNetworkPasswordEl = document.getElementById('connect-new-network-password');
 
 // API CALLS
-function connectNewNetwork(network, psk) {
-  fetch('/connect_wifi/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      ssid: network,
-      psk: psk,
-    }),
-  });
+async function fetchWithErrorHandling(url, options) {
+  const response = await fetch(url, options);
+
+  // not in 200-299 range
+  if (!response.ok) {
+    throw new Error(`HTTP error! At: ${url} Status: ${response.status}`);
+  }
+
+  return response;
 }
-function saveNewNetwork(network, psk) {
-  fetch('/save_wifi/', {
+
+async function connectNewNetwork(network, psk) {
+  await fetchWithErrorHandling('/connect_wifi/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -54,8 +53,21 @@ function saveNewNetwork(network, psk) {
   });
 }
 
-function deleteKnownNetwork(network) {
-  fetch('/delete_wifi/', {
+async function saveNewNetwork(network, psk) {
+  await fetchWithErrorHandling('/save_wifi/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ssid: network,
+      psk: psk,
+    }),
+  });
+}
+
+async function deleteKnownNetwork(network) {
+  await fetchWithErrorHandling('/delete_wifi/', {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -66,33 +78,31 @@ function deleteKnownNetwork(network) {
   });
 }
 
-function refreshNetworks() {
+async function refreshNetworks() {
   let networks = [];
   let known_networks = [];
 
-  Promise.all([
-    fetch('/scan_wifi/')
-      .then((response) => response.json())
-      .then((data) => {
-        networks.push(...data.networks);
-      }),
-    fetch('/known_wifi/')
-      .then((response) => response.json())
-      .then((data) => {
-        known_networks.push(...data.known_networks);
-      }),
-  ])
-    .then(() => {
-      insertNetworksInList(networks, 'connect-new-network-ssid-select');
-      createNetworkCard(known_networks, 'known-network-list');
-    })
-    .catch((error) => {
-      console.error('Error fetching WiFi networks', error);
-    });
+  try {
+    const [scanResponse, knownResponse] = await Promise.all([
+      fetchWithErrorHandling('/scan_wifi/'),
+      fetchWithErrorHandling('/known_wifi/'),
+    ]);
+
+    const scanData = await scanResponse.json();
+    const knownData = await knownResponse.json();
+
+    networks.push(...scanData.networks);
+    known_networks.push(...knownData.known_networks);
+
+    insertNetworksInList(networks, 'connect-new-network-ssid-select');
+    createNetworkCard(known_networks, 'known-network-list');
+  } catch (error) {
+    console.error('Error fetching WiFi networks', error);
+  }
 }
 
 // PROMPT ACTIONS
-confirmDialogEl.addEventListener('close', () => {
+confirmDialogEl.addEventListener('close', async () => {
   if (confirmDialogEl.returnValue === 'confirm') {
     const selectedNetwork = confirmDialogEl.dataset.selectedNetwork;
     const selectedNetworkIndex = confirmDialogEl.dataset.selectedNetworkIndex;
@@ -100,14 +110,18 @@ confirmDialogEl.addEventListener('close', () => {
 
     // DELETE NETWORK
     if (selectedNetwork && selectedNetworkIndex) {
-      // TODO(AC): Call the delete function before removing the item?
-      const listItem = document.getElementById(`${selectedNetwork}-${selectedNetworkIndex}`);
+      try {
+        await deleteKnownNetwork(selectedNetwork);
 
-      listItem.remove();
-      deleteKnownNetwork(selectedNetwork);
+        const listItem = document.getElementById(`${selectedNetwork}-${selectedNetworkIndex}`);
+        listItem.remove();
 
-      delete confirmDialogEl.dataset.selectedNetwork;
-      delete confirmDialogEl.dataset.selectedNetworkIndex;
+        delete confirmDialogEl.dataset.selectedNetwork;
+        delete confirmDialogEl.dataset.selectedNetworkIndex;
+      } catch (error) {
+        console.error('Error deleting network', error);
+        notyf.error('Error deleting network');
+      }
     } else if (disconnect) {
       // DISCONNECT NOW
       tabsContentEl.style.display = 'none';
@@ -215,7 +229,7 @@ function showTab(tabId) {
 }
 
 // RETURN FROM SAVE WIFI CONFIRMATION VIEW
-function goBack() {
+async function goBack() {
   confirmationContentEl.style.display = 'none';
   confirmationReturnBtnEl.style.display = 'none';
 
@@ -225,17 +239,16 @@ function goBack() {
   saveNewSSIDInputEl.value = '';
   saveNewNetworkPasswordEl.value = '';
 
-  refreshNetworks();
+  await refreshNetworks();
   showTab('connect-new-network-form');
 }
 
 // CONNECT NEW NETWORK FORM
-connectNewNetworkFormEl.addEventListener('submit', function (event) {
+connectNewNetworkFormEl.addEventListener('submit', async function (event) {
   event.preventDefault();
 
   try {
-    connectNewNetwork(connectNewNetworkSSIDSelectEl.value, connectNewNetworkPasswordEl.value);
-
+    await connectNewNetwork(connectNewNetworkSSIDSelectEl.value, connectNewNetworkPasswordEl.value);
     tabsContentEl.style.display = 'none';
     containerContentEl.style.maxHeight = '28rem';
 
@@ -263,11 +276,11 @@ connectNewNetworkFormEl.addEventListener('submit', function (event) {
 });
 
 // SAVE NEW NETWORK FORM
-saveNewNetworkFormEl.addEventListener('submit', function (event) {
+saveNewNetworkFormEl.addEventListener('submit', async function (event) {
   event.preventDefault();
 
   try {
-    saveNewNetwork(saveNewSSIDInputEl.value, saveNewNetworkPasswordEl.value);
+    await saveNewNetwork(saveNewSSIDInputEl.value, saveNewNetworkPasswordEl.value);
 
     tabsContentEl.style.display = 'none';
     containerContentEl.style.maxHeight = '28rem';
@@ -291,7 +304,7 @@ saveNewNetworkFormEl.addEventListener('submit', function (event) {
 });
 
 // ON DOM LOAD
-document.addEventListener('DOMContentLoaded', () => {
-  refreshNetworks();
+document.addEventListener('DOMContentLoaded', async () => {
+  await refreshNetworks();
   showTab('connect-new-network-form');
 });
