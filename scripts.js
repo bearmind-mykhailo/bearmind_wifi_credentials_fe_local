@@ -222,7 +222,7 @@ async function onDisconnect() {
   } catch (error) {
     console.error('onDisconnect - error: ', error);
     notyf.error('Failed to disconnect dockstation!');
-  } 
+  }
 }
 
 function showTab(tabId) {
