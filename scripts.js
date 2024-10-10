@@ -3,20 +3,51 @@ var notyf = new Notyf({
   ripple: false,
 });
 
-const confirmDeleteDialogEl = document.getElementById('confirm-delete-dialog');
-confirmDeleteDialogEl.addEventListener('close', () => {
-  const selectedNetwork = confirmDeleteDialogEl.dataset.selectedNetwork;
-  const selectedNetworkIndex = confirmDeleteDialogEl.dataset.selectedNetworkIndex;
+const tabsContentEl = document.getElementById('tabs-content');
+const containerContentEl = document.getElementById('container-content');
+const confirmationContentEl = document.getElementById('confirmation-content');
+const confirmationHeaderEl = document.getElementById('confirmation-header');
+const confirmationIconEl = document.getElementById('confirmation-icon');
+const confirmationInfo1El = document.getElementById('confirmation-info-1');
+const confirmationInfo2El = document.getElementById('confirmation-info-2');
+const connectNewNetworkSSIDSelect = document.getElementById('connect-new-network-ssid-select');
+const confirmationReturnBtnEl = document.getElementById('confirmation-return-btn');
+const saveNewSSIDInput = document.getElementById('save-new-ssid-input');
+const saveNewNetworkPassword = document.getElementById('save-new-network-password');
+const confirmDialogEl = document.getElementById('confirm-dialog');
+const confirmDeleteDialogHeaderEl = document.getElementById('confirm-dialog-header');
+const connectNewNetworkForm = document.getElementById('connect-new-network-form');
+const saveNewNetworkForm = document.getElementById('save-new-network-form');
+const confirmDialogTextEl = document.getElementById('confirm-dialog-text');
 
-  if (confirmDeleteDialogEl.returnValue === 'confirm' && selectedNetwork) {
-    // TODO(AC): Call the delete function before removing the item?
-    const listItem = document.getElementById(`${selectedNetwork}-${selectedNetworkIndex}`);
+confirmDialogEl.addEventListener('close', () => {
+  // DIALOG CONFIRM ACTIONS
+  if (confirmDialogEl.returnValue === 'confirm') {
+    const selectedNetwork = confirmDialogEl.dataset.selectedNetwork;
+    const selectedNetworkIndex = confirmDialogEl.dataset.selectedNetworkIndex;
+    const disconnect = confirmDialogEl.dataset.disconnect;
 
-    listItem.remove();
-    deleteKnownNetwork(selectedNetwork);
+    // DELETE NETWORK
+    if (selectedNetwork && selectedNetworkIndex) {
+      // TODO(AC): Call the delete function before removing the item?
+      const listItem = document.getElementById(`${selectedNetwork}-${selectedNetworkIndex}`);
 
-    delete promptDialog.dataset.selectedNetwork;
-    delete promptDialog.dataset.selectedNetworkIndex;
+      listItem.remove();
+      deleteKnownNetwork(selectedNetwork);
+
+      delete confirmDialogEl.dataset.selectedNetwork;
+      delete confirmDialogEl.dataset.selectedNetworkIndex;
+    } else if (disconnect) {
+      // DISCONNECT NOW
+      tabsContentEl.style.display = 'none';
+      containerContentEl.style.maxHeight = '28rem';
+      confirmationHeaderEl.textContent = 'Disconnecting';
+      confirmationInfo1El.textContent =
+        'Your computer will now be disconnected from the Bearmind Dockstation.';
+      confirmationIconEl.src = './static/icons/disconnect.svg';
+      confirmationContentEl.style.display = 'flex';
+      delete confirmDialogEl.dataset.disconnect;
+    }
   }
 });
 
@@ -41,7 +72,6 @@ function insertNetworksInList(networks, id) {
   ssidSelectEl.value = '';
 }
 
-const confirmDeleteDialogTextEl = document.getElementById('confirm-delete-dialog-text');
 function createNetworkCard(networks, id) {
   const networksListEl = document.getElementById(id);
   networksListEl.innerHTML = '';
@@ -59,15 +89,17 @@ function createNetworkCard(networks, id) {
     deleteButton.addEventListener('click', (event) => {
       event.preventDefault();
 
-      confirmDeleteDialogTextEl.textContent = 'Do you really want to remove ';
+      confirmDialogTextEl.textContent = 'Do you really want to remove ';
       const strongEl = document.createElement('strong');
       strongEl.textContent = network;
-      confirmDeleteDialogTextEl.appendChild(strongEl);
-      confirmDeleteDialogTextEl.appendChild(document.createTextNode('?'));
+      confirmDialogTextEl.appendChild(strongEl);
+      confirmDialogTextEl.appendChild(document.createTextNode('?'));
 
-      confirmDeleteDialogEl.dataset.selectedNetwork = network;
-      confirmDeleteDialogEl.dataset.selectedNetworkIndex = index;
-      confirmDeleteDialogEl.showModal();
+      confirmDialogEl.dataset.selectedNetwork = network;
+      confirmDialogEl.dataset.selectedNetworkIndex = index;
+      confirmDeleteDialogHeaderEl.textContent = 'Delete network';
+
+      confirmDialogEl.showModal();
     });
 
     listItem.appendChild(deleteButton);
@@ -76,14 +108,23 @@ function createNetworkCard(networks, id) {
 }
 
 function testOnDelete() {
-  confirmDeleteDialogTextEl.textContent = 'Do you really want to remove ';
+  confirmDialogTextEl.style.display = 'block';
+  confirmDialogTextEl.textContent = 'Do you really want to remove ';
   const strongEl = document.createElement('strong');
   strongEl.textContent = 'KnownNetwork2';
-  confirmDeleteDialogTextEl.appendChild(strongEl);
-  confirmDeleteDialogTextEl.appendChild(document.createTextNode('?'));
+  confirmDialogTextEl.appendChild(strongEl);
+  confirmDialogTextEl.appendChild(document.createTextNode('?'));
 
-  confirmDeleteDialogEl.dataset.network = 'KnownNetwork2';
-  confirmDeleteDialogEl.showModal();
+  confirmDeleteDialogHeaderEl.textContent = 'Delete network';
+  confirmDialogEl.showModal();
+}
+
+function onDisconnect() {
+  confirmDeleteDialogHeaderEl.textContent = 'Disconnect now?';
+  confirmDialogTextEl.style.display = 'none';
+  confirmDialogTextEl.textContent = '';
+  confirmDialogEl.dataset.disconnect = true;
+  confirmDialogEl.showModal();
 }
 
 function fetchKnownNetworks() {
@@ -156,16 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
   showTab('connect-new-network-form');
 });
 
-const tabsContentEl = document.getElementById('tabs-content');
-const containerContentEl = document.getElementById('container-content');
-const confirmationContentEl = document.getElementById('confirmation-content');
-const confirmationHeaderEl = document.getElementById('confirmation-header');
-const confirmationInfo1El = document.getElementById('confirmation-info-1');
-const connectNewNetworkSSIDSelect = document.getElementById('connect-new-network-ssid-select');
-const confirmationReturnBtnEl = document.getElementById('confirmation-return-btn');
-const saveNewSSIDInput = document.getElementById('save-new-ssid-input');
-const saveNewNetworkPassword = document.getElementById('save-new-network-password');
-
 function goBack() {
   confirmationContentEl.style.display = 'none';
   confirmationReturnBtnEl.style.display = 'none';
@@ -180,16 +211,12 @@ function goBack() {
   showTab('connect-new-network-form');
 }
 
-const connectNewNetworkForm = document.getElementById('connect-new-network-form');
 connectNewNetworkForm.addEventListener('submit', function (event) {
   // TODO - api call
   event.preventDefault();
 
-  // hide tabs content
   tabsContentEl.style.display = 'none';
-
-  // shrink whole popup
-  containerContentEl.style.maxHeight = '34rem';
+  containerContentEl.style.maxHeight = '28rem';
 
   // set custom texts
   confirmationInfo1El.textContent = 'The Bearmind Dockstation is now connecting to ';
@@ -203,25 +230,26 @@ connectNewNetworkForm.addEventListener('submit', function (event) {
   // show confirmation content
   confirmationContentEl.style.display = 'flex';
   confirmationReturnBtnEl.style.display = 'none';
+  confirmationInfo2El.style.display = 'block';
+  confirmationInfo2El.textContent =
+    'Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully connected to the Wi-Fi network.';
 
   notyf.success('Successfully connected to the new Wi-Fi network!');
 });
 
-const saveNewNetworkForm = document.getElementById('save-new-network-form');
 saveNewNetworkForm.addEventListener('submit', function (event) {
   // TODO - api call
   event.preventDefault();
 
-  // hide tabs content
   tabsContentEl.style.display = 'none';
-
-  // shrink whole popup
-  containerContentEl.style.maxHeight = '34rem';
+  containerContentEl.style.maxHeight = '28rem';
 
   // set custom texts
   confirmationHeaderEl.textContent = 'A new Wi-Fi network has been added!';
   confirmationInfo1El.textContent =
     'The network has been successfully saved. It will automatically connect whenever you are within range, ensuring a seamless connection.';
+  confirmationInfo2El.style.display = 'none';
+  confirmationInfo2El.style.textContent = '';
 
   // show confirmation content
   confirmationContentEl.style.display = 'flex';

@@ -90,7 +90,7 @@
                   name="connect new network ssid select"
                   required
                 >
-                <!-- FROM API -->
+                  <!-- FROM API -->
                   <option value="" disabled selected hidden>Select SSID</option>
                   <option value="ScannedNetwork1">ScannedNetwork1</option>
                   <option value="ScannedNetwork2">ScannedNetwork2</option>
@@ -253,18 +253,19 @@
           </div>
 
           <div class="flex-column gap-1 footer">
-            <h2>Exit</h2>
-            <p class="self-start">Short explanation here which...</p>
-            <a href="{% url 'cancel_wifi_configuration' %}">
-              <button
-                type="button"
-                class="action-btn cancel-btn"
-                onclick="testOnDelete()"
-                id="cancel-button"
-              >
-                Exit without saving
-              </button>
-            </a>
+            <h2>Disconnect?</h2>
+            <p class="self-start">
+              Press the button below to disconnect from the Bearmind Dockstation. The Bearmind
+              Dockstation will connect to the first known Wi-Fi network within range.
+            </p>
+            <button
+              type="button"
+              class="action-btn cancel-btn"
+              id="cancel-button"
+              onclick="onDisconnect()"
+            >
+              Disconnect now
+            </button>
           </div>
         </div>
 
@@ -275,16 +276,14 @@
             <p id="confirmation-info-1"></p>
           </div>
           <img
+            id="confirmation-icon"
             src="./static/icons/circle-check.svg"
             style="width: unset"
             alt="Refresh Icon"
-            width="160"
-            height="160"
+            width="120"
+            height="120"
           />
-          <p id="confirmation-info-2">
-            Monitor the Wi-Fi LED on the Bearmind Dockstation to ensure that it has successfully
-            connected to the Wi-Fi network.
-          </p>
+          <p id="confirmation-info-2"></p>
           <button
             id="confirmation-return-btn"
             class="action-btn cancel-btn container__confirmation-content__return-btn"
@@ -297,11 +296,11 @@
     </div>
 
     <!-- DIALOG POPUP -->
-    <dialog id="confirm-delete-dialog">
+    <dialog id="confirm-dialog">
       <form method="dialog">
         <div class="flex-column gap-2">
-          <h2>Confirm action</h2>
-          <p id="confirm-delete-dialog-text"></p>
+          <h2 id="confirm-dialog-header"></h2>
+          <p id="confirm-dialog-text"></p>
           <div class="flex-row justify-between">
             <button class="dialog-action-btn cancel-btn" value="cancel">Cancel</button>
             <button class="dialog-action-btn submit-btn" value="confirm">Confirm</button>
