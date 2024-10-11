@@ -39,6 +39,7 @@ connectNewNetworkFormEl.addEventListener('submit', async function (event) {
   
       tabsContentEl.style.display = 'none';
       containerContentEl.style.maxHeight = '28rem';
+      confirmationIconEl.src = './static/icons/wifi.svg';
   
       // set custom texts
       confirmationHeaderEl.textContent = 'A new Wi-Fi network has been added!';

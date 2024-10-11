@@ -14,7 +14,6 @@ async function fetchWithErrorHandling(url, options) {
     let networks = [];
     let known_networks = [];
   
-    try {
       const [scanResponse, knownResponse] = await Promise.all([
         fetchWithErrorHandling('/scan_wifi/'),
         fetchWithErrorHandling('/known_wifi/'),
@@ -28,9 +27,6 @@ async function fetchWithErrorHandling(url, options) {
   
       insertNetworksInList(networks, 'connect-new-network-ssid-select');
       createNetworkCard(known_networks, 'known-network-list');
-    } catch (error) {
-      console.error('Error fetching WiFi networks', error);
-    }
   }
   
   async function connectNewNetwork(network, psk) {

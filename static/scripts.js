@@ -5,6 +5,8 @@ var notyf = new Notyf({
 });
 
 // DOM NODES
+const loadingOverlayEl = document.getElementById('loading-overlay');
+
 const tabsContentEl = document.getElementById('tabs-content');
 
 const containerContentEl = document.getElementById('container-content');
@@ -82,6 +84,18 @@ function testOnDelete() {
   confirmDialogEl.showModal();
 }
 
+async function executeWithSpinner(asyncFn, errorMessage) {
+  try {
+    loadingOverlayEl.style.display = 'flex';
+    await asyncFn();
+  } catch (error) {
+    console.error(errorMessage);
+    notyf.error(errorMessage);
+  } finally {
+    loadingOverlayEl.style.display = 'none';
+  }
+}
+
 function onDisconnect() {
     confirmDeleteDialogHeaderEl.textContent = 'Disconnect now?';
     confirmDialogTextEl.style.display = 'none';
@@ -91,7 +105,7 @@ function onDisconnect() {
 }
 
 function showTab(tabId) {
-  const tabs = document.querySelectorAll('.tab');
+  const tabs = document.querySelectorAll('.tab__container');
   tabs.forEach((tab) => {
     tab.style.display = 'none';
   });
@@ -103,6 +117,7 @@ function showTab(tabId) {
   tabHeaders.forEach((header) => {
     header.classList.remove('header__item__active');
   });
+
   document.getElementById(`header-${tabId}`).classList.add('header__item__active');
 }
 
@@ -117,12 +132,14 @@ async function goBack() {
   saveNewSSIDInputEl.value = '';
   saveNewNetworkPasswordEl.value = '';
 
-  await refreshNetworks();
   showTab('connect-new-network-form');
+  await executeWithSpinner(refreshNetworks, 'Unable to refresh networks.');
 }
 
 // ON DOM LOAD
 document.addEventListener('DOMContentLoaded', async () => {
-  await refreshNetworks();
-  showTab('connect-new-network-form');
+  // select first tab & fetch networks
+  connectNewNetworkFormEl.style.display = 'flex';
+  document.getElementById('header-connect-new-network-form').classList.add('header__item__active');
+  await executeWithSpinner(refreshNetworks, 'Unable to refresh networks.');
 });
